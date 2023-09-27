@@ -4,7 +4,7 @@
 # `project()` command. `project()` sets up some helpful variables that describe source/binary
 # directories, and the current project version. This is a standard CMake command.
 
-project(AUDIO_PLUGIN_YourPluginName VERSION 0.0.1)
+project(AUDIO_PLUGIN_GainPlugin VERSION 0.0.1)
 
 # `VST3_CATEGORIES`
 #  - Should be one or more, separated by spaces, of the following: `Fx`, `Instrument`, `Analyzer`,
@@ -20,9 +20,10 @@ project(AUDIO_PLUGIN_YourPluginName VERSION 0.0.1)
 #    `kAudioUnitType_Output`, `kAudioUnitType_Panner`
 
 # add_compile_definitions(FACTORY_PRESETS) # use this if you have finally some presets to add (see binary files below)
-add_compile_definitions(WITH_MIDIKEYBOARD)
+# add_compile_definitions(WITH_MIDIKEYBOARD)
+# add_compile_definitions(WITH_PRESETHANDLERGUI)
 
-juce_add_plugin(AudioPluginYourPluginName
+juce_add_plugin(AudioPluginGainPlugin
     # VERSION ...                               # Set this if the plugin version is different to the project version
     # ICON_BIG ...                              # ICON_* arguments specify a path to an image file to use as an icon for the Standalone
     # ICON_SMALL ...
@@ -39,7 +40,7 @@ juce_add_plugin(AudioPluginYourPluginName
     PLUGIN_MANUFACTURER_CODE IHAJ               # A four-character manufacturer id with at least one upper-case character
     PLUGIN_CODE tep1                            # A unique four-character plugin id with at least one upper-case character
     FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
-    PRODUCT_NAME "YourPluginName")     # The name of the final executable, which can differ from the target name
+    PRODUCT_NAME "GainPlugin")     # The name of the final executable, which can differ from the target name
 #
 # `juce_generate_juce_header` will create a JuceHeader.h for a given target, which will be generated
 # into your build tree. This should be included with `#include <JuceHeader.h>`. The include path for
@@ -48,7 +49,7 @@ juce_add_plugin(AudioPluginYourPluginName
 # probably don't need to call this.
 
 # juce_generate_juce_header(AudioPluginExample)
-juce_generate_juce_header(AudioPluginYourPluginName)
+juce_generate_juce_header(AudioPluginGainPlugin)
 
 # `target_sources` adds source files to a target. We pass the target that needs the sources as the
 # first argument, then a visibility parameter for the sources which should normally be PRIVATE.
@@ -56,11 +57,11 @@ juce_generate_juce_header(AudioPluginYourPluginName)
 # CMake command.
 
 
-target_sources(AudioPluginYourPluginName
+target_sources(AudioPluginGainPlugin
     PRIVATE
         PluginEditor.cpp
         PluginProcessor.cpp
-        YourPluginName.cpp
+        GainPlugin.cpp
         tools/MidiModPitchState.cpp
         tools/PresetHandler.cpp
         tools/SynchronBlockProcessor.cpp
@@ -70,7 +71,7 @@ target_sources(AudioPluginYourPluginName
 
 
 
-target_compile_definitions(AudioPluginYourPluginName
+target_compile_definitions(AudioPluginGainPlugin
     PUBLIC
         # JUCE_WEB_BROWSER and JUCE_USE_CURL would be on by default, but you might not need them.
         JUCE_WEB_BROWSER=0  # If you remove this, add `NEEDS_WEB_BROWSER TRUE` to the `juce_add_plugin` call
@@ -103,20 +104,20 @@ target_compile_definitions(AudioPluginYourPluginName
 #  res/*.xml
 #  )
 
-#juce_add_binary_data( AudioPluginYourPluginName-binary
+#juce_add_binary_data( AudioPluginGainPlugin-binary
 #  SOURCES ${TEMPLATE_RESOURCES_GLOB}
 #)
 #if( UNIX AND NOT APPLE )
-#set_target_properties(AudioPluginYourPluginName-binary PROPERTIES
+#set_target_properties(AudioPluginGainPlugin-binary PROPERTIES
 #    POSITION_INDEPENDENT_CODE TRUE)
 #endif()
 
 
 
-target_link_libraries(AudioPluginYourPluginName
+target_link_libraries(AudioPluginGainPlugin
     PRIVATE
         # AudioPluginData           # If we'd created a binary data target, we'd link to it here
-        # AudioPluginYourPluginName-binary # or here if we used the recursice method
+        # AudioPluginGainPlugin-binary # or here if we used the recursice method
         juce::juce_audio_utils
         # juce::juce_opengl  # if we want to use opengl
     PUBLIC

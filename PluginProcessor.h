@@ -3,16 +3,16 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include "tools/MidiModPitchState.h"
 #include "tools/PresetHandler.h"
-#include "YourPluginName.h"
+#include "GainPlugin.h"
 
 //==============================================================================
-class YourPluginNameAudioProcessor  : public juce::AudioProcessor
+class GainPluginAudioProcessor  : public juce::AudioProcessor
 {
 public:
-    friend class YourPluginNameAudioProcessorEditor;
+    friend class GainPluginAudioProcessorEditor;
     //==============================================================================
-    YourPluginNameAudioProcessor();
-    ~YourPluginNameAudioProcessor() override;
+    GainPluginAudioProcessor();
+    ~GainPluginAudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -64,7 +64,7 @@ private:
 #endif
     // Your plugin stuff
 
-    YourPluginNameAudio m_algo;
+    GainPluginAudio m_algo;
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (YourPluginNameAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (GainPluginAudioProcessor)
 };

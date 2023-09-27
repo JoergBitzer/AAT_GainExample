@@ -10,19 +10,20 @@
 // This is how we define our parameter as globals to use it in the audio processor as well as in the editor
 const struct
 {
-	const std::string ID = "ExampleID";
-	const std::string name = "Example";
-	const std::string unitName = "xyz";
-	const float minValue = 1.f;
-	const float maxValue = 2.f;
-	const float defaultValue = 1.2f;
-}g_paramExample;
+	const std::string ID = "gain";
+	const std::string name = "Gain";
+	const std::string unitName = "dB";
+	const float minValue = -80.f;
+	const float maxValue = 20.f;
+	const float defaultValue = 0.f;
+}g_paramGain;
 
 
-class YourPluginNameAudio : public SynchronBlockProcessor
+
+class GainPluginAudio : public SynchronBlockProcessor
 {
 public:
-    YourPluginNameAudio();
+    GainPluginAudio();
     void prepareToPlay(double sampleRate, int max_samplesPerBlock, int max_channels);
     virtual int processSynchronBlock(juce::AudioBuffer<float>&, juce::MidiBuffer& midiMessages);
 
@@ -35,16 +36,25 @@ public:
 
 private:
     int m_Latency = 0;
+
+private:
+    float m_gain = 1.f;
+    std::atomic<float>* m_gainParam = nullptr; 
+    float m_gainParamOld = std::numeric_limits<float>::min(); //smallest possible number, will change in the first block
+    juce::SmoothedValue<float,juce::ValueSmoothingTypes::Multiplicative> m_smoothedGain;
+
 };
 
-class YourPluginNameGUI : public Component
+class GainPluginGUI : public Component
 {
 public:
-	YourPluginNameGUI(juce::AudioProcessorValueTreeState& apvts);
+	GainPluginGUI(juce::AudioProcessorValueTreeState& apvts);
 
 	void paint(juce::Graphics& g) override;
 	void resized() override;
 private:
     AudioProcessorValueTreeState& m_apvts; 
+    juce::Slider m_GainSlider;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_GainAttachment;
 
 };

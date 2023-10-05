@@ -85,7 +85,7 @@ GainPluginGUI::GainPluginGUI(juce::AudioProcessorValueTreeState& apvts)
     m_GainSlider.setTextValueSuffix (g_paramGain.unitName);    
     m_GainSlider.setSliderStyle(juce::Slider::LinearVertical);
     m_GainSlider.setTextBoxStyle(juce::Slider::TextEntryBoxPosition::TextBoxAbove, true, 60, 20);
-    m_GainSlider.setValue(g_paramGain.defaultValue);
+    m_GainSlider.setValue(*m_apvts.getRawParameterValue(g_paramGain.ID));
 	m_GainAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(apvts, g_paramGain.ID, m_GainSlider);
 	addAndMakeVisible(m_GainSlider);
 }

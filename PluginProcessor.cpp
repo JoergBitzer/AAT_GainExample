@@ -230,7 +230,11 @@ void GainPluginAudioProcessor::setStateInformation (const void* data, int sizeIn
             {
                 float val = subvt.getProperty("ScaleFactor");
                 m_pluginScaleFactor = val;
+                vt.removeChild(subvt, nullptr);
             }
+            String presetname(xmlState->getStringAttribute("presetname"));
+            m_presets.setCurrentPresetName(presetname);
+
 			m_parameterVTS->replaceState(vt);
         }
 
